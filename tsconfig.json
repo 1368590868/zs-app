@@ -11,6 +11,7 @@
 		"esModuleInterop": true,
 		"lib": ["ESNext", "dom", "ESNext.Promise"],
 		"types": ["@dcloudio/types"],
+		"ignoreDeprecations":"5.0",
 		"suppressImplicitAnyIndexErrors": true,
 		"baseUrl": "./",
 		// "importHelpers": true,
