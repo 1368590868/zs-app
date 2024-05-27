@@ -87,7 +87,7 @@ const model = ref({
   time: new Date().toISOString().split("T")[0],
   remark: "",
 });
-const columns = ref([]);
+const columns = ref<{ text: string; value: string }[]>([]);
 const options = reactive({
   projectList: [],
   costTypeList: Object.values(costSubjectEnum).map((item) => {
