@@ -24,7 +24,8 @@
 			"constants/*": ["src/constants/*"],
 			"hooks/*": ["src/hooks/*"],
 			"types/*": ["src/types/*"],
-			"plugins/*": ["src/plugins/*"]
+			"plugins/*": ["src/plugins/*"],
+			"enum/*": ["src/enum/*"],
 		}
 	},
 	"include": [

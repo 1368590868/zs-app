@@ -46,6 +46,8 @@
 		"@dcloudio/uni-mp-weixin": "3.0.0-alpha-3040820220424001",
 		"@dcloudio/uni-quickapp-webview": "3.0.0-alpha-3040820220424001",
 		"axios": "^1.7.2",
+		"pinia": "^2.0.36",
+		"pinia-plugin-persistedstate": "^3.2.1",
 		"vant": "^4.9.0",
 		"vite-plugin-style-import": "^2.0.0",
 		"vue": "^3.3.11",
@@ -57,7 +59,7 @@
 		"node": ">=14.0.0",
 		"pnpm": "<=7.0.0"
 	},
-	"packageManager": "pnpm",
+	"packageManager": "npm",
 	"devDependencies": {
 		"@dcloudio/types": "^2.6.4",
 		"@dcloudio/uni-automator": "3.0.0-alpha-3040820220424001",
@@ -68,8 +70,6 @@
 		"consola": "^3.2.3",
 		"less": "^4.1.2",
 		"typescript": "^4.6.3",
-		"unplugin-auto-import": "^0.17.6",
-		"unplugin-vue-components": "^0.27.0",
 		"vite": "^2.9.6"
 	}
 }

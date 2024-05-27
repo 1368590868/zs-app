@@ -1,77 +1,139 @@
 <template>
-  <view class="content">
-    <image class="logo" src="/static/logo.png" />
-    <view class="text-area">
-      <text class="title">{{ title }}</text>
-    </view>
-    <view class="example-links">
-      <navigator url="/pages/request/index">网络请求</navigator>
-      <navigator url="/pages/user-list/index">用户列表</navigator>
-    </view>
-    <view class="github">
-      <a href="https://github.com/yue1123/uni-app-vue3-template"> Github</a>
-    </view>
-    <van-button type="primary" @click="handleClick">主要按钮</van-button>
-    <van-button type="success">成功按钮</van-button>
-    <van-button type="default">默认按钮</van-button>
-    <van-button type="danger">危险按钮</van-button>
-    <van-button type="warning">警告按钮</van-button>
+  <view>
+    <Form @submit="onSubmit">
+      <CellGroup inset>
+        <view>报销信息</view>
+        <Field
+          required
+          v-model="model.projectId"
+          is-link
+          readonly
+          name="projectId"
+          label="成本项目"
+          placeholder="用户名"
+          :rules="[{ required: true, message: '请输入' }]"
+          @click="showModal('projectList')"
+        />
+        <Popup v-model:show="showPicker" position="bottom" height="30%">
+          <Picker
+            :columns="columns"
+            @confirm="onConfirm"
+            @cancel="showPicker = false"
+          />
+        </Popup>
+        <Field
+          required
+          is-link
+          readonly
+          v-model="model.costTypeName"
+          name="costTypeName"
+          label="成本科目"
+          placeholder="用户名"
+          @click="showModal('costTypeList')"
+          :rules="[{ required: true, message: '请输入' }]"
+        />
+        <Field
+          required
+          v-model="model.phaseBudget"
+          name="phaseBudget"
+          label="成本金额(元)"
+          placeholder="用户名"
+          :rules="[{ required: true, message: '请输入' }]"
+        />
+        <Field
+          v-model="model.nickName"
+          name="nickName"
+          label="填报人"
+          placeholder="请输入"
+          :rules="[{ required: true, message: '请输入' }]"
+        />
+        <Field
+          v-model="model.time"
+          name="time"
+          label="填写时间"
+          placeholder="用户请输入名"
+          :rules="[{ required: true, message: '请输入' }]"
+        />
+        <Field
+          v-model="model.remark"
+          name="remark"
+          label="备注"
+          placeholder="请输入"
+          :rules="[{ required: true, message: '请填写用户名' }]"
+        />
+      </CellGroup>
+      <div style="margin: 16px">
+        <Button round block type="primary" native-type="submit"> 提交 </Button>
+      </div>
+    </Form>
   </view>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-const title = ref("Hello uni-app");
-import { showToast, Button } from "vant";
+import { Form, Field, CellGroup, Button, Picker, Popup } from "vant";
+import { onMounted, reactive, ref } from "vue";
 
-const handleClick = () => {
-  console.log(123123);
-  showToast("提示内容");
+import { useAppStore } from "store/store";
+import { getProjectNameAndId } from "api/index";
+import { costSubjectEnum } from "enum/index";
+
+const store = useAppStore();
+// data
+const model = ref({
+  projectId: "",
+  costTypeName: "",
+  phaseBudget: 0,
+  nickName: "",
+  time: new Date().toISOString().split("T")[0],
+  remark: "",
+});
+const columns = ref([]);
+const options = reactive({
+  projectList: [],
+  costTypeList: Object.values(costSubjectEnum).map((item) => {
+    return {
+      text: item,
+      value: item,
+    };
+  }),
+});
+// lifecycle
+onMounted(() => {
+  getProjectList();
+});
+
+// methods
+type Types = "projectList" | "costTypeList";
+const showModal = (type: Types) => {
+  columns.value = options[type];
+  showPicker.value = true;
+};
+const getProjectList = async () => {
+  const res = await getProjectNameAndId();
+  options.projectList = res.data.map((item: any) => {
+    return {
+      text: item.projectName,
+      value: item.projectId,
+    };
+  });
+};
+
+const onSubmit = (values: any) => {
+  store.setPageLoading(true);
+  console.log("submit", values, showPicker.value);
+};
+
+const fieldValue = ref("");
+const showPicker = ref(false);
+
+const onConfirm = ({
+  selectedOptions,
+}: {
+  selectedOptions: { text: string }[];
+}) => {
+  showPicker.value = false;
+  model.value.projectId = selectedOptions[0].text;
 };
 </script>
 
-<style lang="less">
-.content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.logo {
-  height: 200rpx;
-  width: 200rpx;
-  margin-top: 200rpx;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 50rpx;
-}
-
-.text-area {
-  display: flex;
-  justify-content: center;
-}
-
-.title {
-  font-size: 36rpx;
-  color: #8f8f94;
-}
-.example-links {
-  display: flex;
-  justify-content: space-around;
-  padding: 10px;
-  navigator {
-    margin: 0 10px;
-    color: #007aff;
-  }
-}
-.github {
-  margin-top: 50rpx;
-  font-size: 36rpx;
-  color: #8f8f94;
-  position: fixed;
-  bottom: 15px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-</style>
+<style lang="less"></style>
