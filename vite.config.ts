@@ -1,13 +1,7 @@
 import { defineConfig } from "vite";
 import uni from "@dcloudio/vite-plugin-uni";
 
-import { resolve, join } from "path";
-import { VantResolver, VantImports } from "@vant/auto-import-resolver";
-
-// Define resolver function for Vant imports
-const vantResolver = () => ({
-  van: Object.keys(VantImports).map((key) => `vant/es/${key}`),
-});
+import { join } from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({

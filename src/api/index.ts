@@ -7,8 +7,9 @@ export function getRandomSentence() {
 }
 
 const prefix = "/api/bim-cost-control-backend";
+const userPrefix = "/api/cmct-auth";
 enum Api {
-  add = `${prefix}/project/add`,
+  add = `${prefix}/project_phase_cost/add`,
   edit = `${prefix}/project/edit`,
   page = `${prefix}/project/page`,
   remove = `${prefix}/project/remove/`,
@@ -23,11 +24,34 @@ enum Api {
   statisticsProject = `${prefix}/project/statisticsProject`,
   statisticsProjectByDept = `${prefix}/project/statisticsProjectByDept`,
   deptList = `${prefix}/project/deptList`,
+  userInfo = `${userPrefix}/user/userInfo`,
+  findNowPhasesByProjectId = `${prefix}/project_phase/findNowPhasesByProjectId`,
 }
+/**
+ * @description: 获取用户信息
+ */
+export const getUserInfo = () => {
+  return httpClient.get(Api.userInfo);
+};
 
 /**
  * @description: 获取项目名称和id
  */
 export const getProjectNameAndId = () => {
   return httpClient.get(Api.getProjectNameAndId);
+};
+
+/**
+ * @description: 新增项目阶段成本明细
+ */
+
+export const addCostApi = (params: any) => {
+  return httpClient.post(Api.add, params);
+};
+
+/**
+ * @description: 查找某个阶段的详情
+ */
+export const findNowPhasesByProjectIdApi = (id: string) => {
+  return httpClient.get(`${Api.findNowPhasesByProjectId}/${id}`);
 };

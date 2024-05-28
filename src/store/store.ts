@@ -4,12 +4,21 @@ import { store } from "store/index";
 interface AppState {
   pageLoading: boolean;
   token: string;
+  userInfo: UserInfo;
+}
+interface UserInfo {
+  nickName: string;
+  account: string;
 }
 export const useAppStore = defineStore({
   id: "app",
   state: (): AppState => ({
     pageLoading: false,
-    token: "65ba94d0-e467-4de2-bffd-a2d1bdf91b8e",
+    token: "49dbb80e-8bc5-4827-80f6-39cf531b9f5b",
+    userInfo: {
+      nickName: "管理员",
+      account: "admin",
+    },
   }),
   persist: true,
   getters: {
@@ -19,12 +28,18 @@ export const useAppStore = defineStore({
     getToken(): string {
       return this.token;
     },
+    getUserInfo(): UserInfo {
+      return this.userInfo;
+    },
   },
   actions: {
     setPageLoading(loading: boolean): void {
       this.pageLoading = loading;
     },
     setToken(): void {},
+    setUserInfo(userInfo: UserInfo): void {
+      this.userInfo = userInfo;
+    },
   },
 });
 
