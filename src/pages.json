@@ -8,6 +8,13 @@
 			}
 		},
 		{
+			"path": "pages/myPhaseCost/index",
+			"style": {
+				"navigationBarTitleText": "我的成本记录"
+			}
+		},
+		
+		{
 			"path": "pages/request/index",
 			"style": {
 				"navigationBarTitleText": "网络请求示例"

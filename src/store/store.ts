@@ -14,7 +14,7 @@ export const useAppStore = defineStore({
   id: "app",
   state: (): AppState => ({
     pageLoading: false,
-    token: "49dbb80e-8bc5-4827-80f6-39cf531b9f5b",
+    token: "e1a0e5d7-5071-4cf3-a1b8-8a88e7220882",
     userInfo: {
       nickName: "管理员",
       account: "admin",
@@ -36,7 +36,9 @@ export const useAppStore = defineStore({
     setPageLoading(loading: boolean): void {
       this.pageLoading = loading;
     },
-    setToken(): void {},
+    setToken(token: string): void {
+      this.token = token;
+    },
     setUserInfo(userInfo: UserInfo): void {
       this.userInfo = userInfo;
     },

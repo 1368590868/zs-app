@@ -10,22 +10,11 @@ const prefix = "/api/bim-cost-control-backend";
 const userPrefix = "/api/cmct-auth";
 enum Api {
   add = `${prefix}/project_phase_cost/add`,
-  edit = `${prefix}/project/edit`,
-  page = `${prefix}/project/page`,
-  remove = `${prefix}/project/remove/`,
-  detail = `${prefix}/project/detail/`,
-  import = `${prefix}/project/import`,
-  export = `${prefix}/project/export?ids=`,
   getProjectNameAndId = `${prefix}/project/getProjectNameAndId`,
-  logs = `${prefix}/project_operation_log/page`,
-  controlDetermine = `${prefix}/project/controlDetermine/`,
-  controlEndApply = `${prefix}/project/controlEndApply/`,
-  controlExtensionApply = `${prefix}/project/controlExtensionApply/`,
-  statisticsProject = `${prefix}/project/statisticsProject`,
-  statisticsProjectByDept = `${prefix}/project/statisticsProjectByDept`,
   deptList = `${prefix}/project/deptList`,
   userInfo = `${userPrefix}/user/userInfo`,
   findNowPhasesByProjectId = `${prefix}/project_phase/findNowPhasesByProjectId`,
+  costList = `${prefix}/project_phase_cost/page`,
 }
 /**
  * @description: 获取用户信息
@@ -54,4 +43,8 @@ export const addCostApi = (params: any) => {
  */
 export const findNowPhasesByProjectIdApi = (id: string) => {
   return httpClient.get(`${Api.findNowPhasesByProjectId}/${id}`);
+};
+
+export const costListApi = (params: any) => {
+  return httpClient.get(Api.costList, { params });
 };

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onLaunch, onShow, onHide, onReady } from "@dcloudio/uni-app";
+import { onLaunch, onShow, onHide, onReady, onLoad } from "@dcloudio/uni-app";
 import { useAppStore } from "store/store";
 const store = useAppStore();
 
@@ -9,12 +9,17 @@ const getUserInfomation = async () => {
   if (res.code === 0) {
     store.setUserInfo(res.data);
   }
-  console.log("getUserInfomation", res);
 };
-onLaunch(() => {
-  console.log("App Launch");
+const initToken = (token: string | undefined) => {
+  if (token) {
+    store.setToken(token);
+  }
+};
+onLaunch((options) => {
+  console.log("App Launch", options);
 
   getUserInfomation();
+  initToken(options.query?.token);
 });
 onReady(() => {
   console.log("App Ready");
