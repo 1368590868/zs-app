@@ -16,6 +16,8 @@ enum Api {
   findNowPhasesByProjectId = `${prefix}/project_phase/findNowPhasesByProjectId`,
   costList = `${prefix}/project_phase_cost/page`,
   project_audit_opinion = `${prefix}/project_audit_opinion/page`,
+  audit = `${prefix}/project_phase_cost/audit`,
+  addAuditOpinion = `${prefix}/project_audit_opinion/add`,
 }
 /**
  * @description: 获取用户信息
@@ -70,4 +72,18 @@ interface AuditParams {
 
 export const projectAuditOpinionApi = (params: AuditParams) => {
   return httpClient.get(Api.project_audit_opinion, { params });
+};
+
+/**
+ * 审批通过驳回
+ */
+export const auditApi = (params: any) => {
+  return httpClient.post(Api.audit, params);
+};
+
+/**
+ * 新增意见
+ */
+export const addAuditOpinionApi = (params: any) => {
+  return httpClient.post(Api.addAuditOpinion, params);
 };

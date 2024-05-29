@@ -42,7 +42,7 @@
               <view class="p_yj">意见:</view>
               <view class="p_detail">{{ i.info }}</view>
             </view>
-            <view class="p_pass" :style="{ color: '#27CB0D' }">通过</view>
+            <view class="p_pass" :style="{ color: i.bgColor }">通过</view>
           </view>
         </view>
       </view>

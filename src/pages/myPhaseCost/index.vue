@@ -11,7 +11,11 @@
     <Icon class="filter" name="filter-o" @click="showFilter" />
     <Icon name="replay" class="reflush" @click="onFlush" />
   </view>
-  <ThTable :datasource="datasource" />
+  <ThTable :datasource="datasource" v-if="datasource" />
+  <view class="bg-empty" v-else>
+    <Image width="100" height="100" :src="emptyIcon" />
+    <text>暂无更多数据</text>
+  </view>
 
   <!-- Filter -->
   <view class="popup-filter" v-show="isShowFilter">
@@ -92,10 +96,12 @@ import {
   CellGroup,
   Form,
   DatePicker,
+  Image,
 } from "vant";
 import { ref, unref, watch, watchEffect } from "vue";
 import ThTable from "./table-list.vue";
 import { costListApi } from "api/index";
+import { emptyIcon } from "constants/imageIcons";
 
 const datasource = ref([]);
 
@@ -233,6 +239,19 @@ const onFlush = () => {
       border-radius: 16rpx 16rpx 16rpx 16rpx;
     }
     padding: 24rpx;
+  }
+}
+
+.bg-empty {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 75vh;
+  text {
+    color: #999999;
+    font-size: 28rpx;
+    margin-top: 20rpx;
   }
 }
 </style>

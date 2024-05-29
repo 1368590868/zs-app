@@ -1,3 +1,4 @@
+import { get } from "http";
 import { defineStore } from "pinia";
 import { store } from "store/index";
 
@@ -5,10 +6,14 @@ interface AppState {
   pageLoading: boolean;
   token: string;
   userInfo: UserInfo;
+  approvalOpinion: Records[];
 }
 interface UserInfo {
   nickName: string;
   account: string;
+}
+interface Records {
+  [x: string]: any;
 }
 export const useAppStore = defineStore({
   id: "app",
@@ -19,6 +24,8 @@ export const useAppStore = defineStore({
       nickName: "管理员",
       account: "admin",
     },
+    /**审批意见 */
+    approvalOpinion: [],
   }),
   persist: true,
   getters: {
@@ -31,6 +38,9 @@ export const useAppStore = defineStore({
     getUserInfo(): UserInfo {
       return this.userInfo;
     },
+    getApprovalOpinion(): Records[] {
+      return this.approvalOpinion;
+    },
   },
   actions: {
     setPageLoading(loading: boolean): void {
@@ -41,6 +51,9 @@ export const useAppStore = defineStore({
     },
     setUserInfo(userInfo: UserInfo): void {
       this.userInfo = userInfo;
+    },
+    setApprovalOpinion(approvalOpinion: Records[]): void {
+      this.approvalOpinion = approvalOpinion;
     },
   },
 });
