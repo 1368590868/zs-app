@@ -1,11 +1,10 @@
 <template>
   <view>
     <!-- height 单元格高度  border 是否带有纵向边框 type值为type="selection" 时开启多选 loading显示加载中(默认false) emptyText 空数据时显示的文本内容-->
-    <th-table
+    <uni-table
       :column="column"
       :listData="props.datasource"
       :tdClick="tdClick"
-      height="0.5"
       :stripe="true"
       :border="true"
       :loading="false"
@@ -72,7 +71,7 @@
           >查看</span
         >
       </template>
-    </th-table>
+    </uni-table>
   </view>
 </template>
 

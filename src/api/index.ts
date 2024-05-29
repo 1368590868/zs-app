@@ -15,6 +15,7 @@ enum Api {
   userInfo = `${userPrefix}/user/userInfo`,
   findNowPhasesByProjectId = `${prefix}/project_phase/findNowPhasesByProjectId`,
   costList = `${prefix}/project_phase_cost/page`,
+  project_audit_opinion = `${prefix}/project_audit_opinion/page`,
 }
 /**
  * @description: 获取用户信息
@@ -45,6 +46,28 @@ export const findNowPhasesByProjectIdApi = (id: string) => {
   return httpClient.get(`${Api.findNowPhasesByProjectId}/${id}`);
 };
 
+/**
+ *
+ * @description 成本列表
+ */
 export const costListApi = (params: any) => {
   return httpClient.get(Api.costList, { params });
+};
+interface AuditParams {
+  /**月度意见 */
+  monthAuditId?: string;
+  /**审核意见标识 */
+  auditOpinionFlag?: string;
+  /**成本意见 */
+  projectPhaseCostId?: string;
+  [x: string]: any;
+}
+
+/**
+ * @description: 获取意见列表
+ * @param {AuditParams} params
+ */
+
+export const projectAuditOpinionApi = (params: AuditParams) => {
+  return httpClient.get(Api.project_audit_opinion, { params });
 };

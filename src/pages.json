@@ -13,7 +13,18 @@
 				"navigationBarTitleText": "我的成本记录"
 			}
 		},
-		
+		{
+			"path": "pages/projectPhaseCostDetail/index",
+			"style": {
+				"navigationBarTitleText": "成本明细审核"
+			}
+		},
+		{
+			"path": "pages/audit-list/index",
+			"style": {
+				"navigationBarTitleText": "审批意见"
+			}
+		},
 		{
 			"path": "pages/request/index",
 			"style": {
