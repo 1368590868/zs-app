@@ -40,7 +40,7 @@
             name="phaseBudget"
             label="成本金额"
             placeholder="请输入"
-            :rules="[{ required: true, message: '请输入' }]"
+            :rules="[{ validator: validateGreaterThanZero, message: '请输入' }]"
           />
           <Field
             v-model="model.nickName"
@@ -168,6 +168,10 @@ watch(
     getDetails(val);
   }
 );
+// util
+const validateGreaterThanZero = (value: number) => {
+  return value > 0;
+};
 
 // methods
 const showModal = (type: Types) => {
