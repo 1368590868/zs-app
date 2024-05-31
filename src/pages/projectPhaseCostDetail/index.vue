@@ -4,14 +4,15 @@
       <view @click="onShowPicker('projectLeaderStatus')"
         >审核状态 <Icon class="icon" name="arrow-down"
       /></view>
-      <view @click="onShowPicker('costTypeName')"
-        >成本科目 <Icon class="icon" name="arrow-down"
-      /></view>
     </Space>
     <Icon class="filter" name="filter-o" @click="showFilter" />
     <Icon name="replay" class="reflush" @click="onFlush" />
   </view>
-  <ThTable :datasource="datasource" @reload="onFlush" v-if="datasource" />
+  <ThTable
+    :datasource="datasource"
+    @reload="onFlush"
+    v-if="datasource.length > 0"
+  />
   <view class="bg-empty" v-else>
     <Image width="100" height="100" :src="emptyIcon" />
     <text>暂无更多数据</text>
@@ -95,7 +96,7 @@ import {
   CellGroup,
   Form,
   DatePicker,
-  Popover,
+  Image,
 } from "vant";
 import { ref, unref, watch, watchEffect } from "vue";
 import ThTable from "./table-list.vue";

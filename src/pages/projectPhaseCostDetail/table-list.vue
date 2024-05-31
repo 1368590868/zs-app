@@ -84,18 +84,7 @@
             </uni-td>
             <!-- 成本负责人 -->
             <uni-td align="center" v-if="['costLeaderStatus'].includes(c.key)">
-              <view v-if="item.costLeaderStatus == 0">
-                <Space>
-                  <text class="text-link" @click="onOpenDialog(true, item, 2)"
-                    >通过</text
-                  >
-                  <text class="text-link" @click="onOpenDialog(false, item, 2)"
-                    >驳回</text
-                  >
-                </Space>
-              </view>
               <span
-                v-else
                 :style="{
                   color: costTextColor(item.costLeaderStatus),
                 }"
@@ -121,18 +110,7 @@
               align="center"
               v-if="['operationDeptStatus'].includes(c.key)"
             >
-              <view v-if="item.operationDeptStatus == 0">
-                <Space>
-                  <text class="text-link" @click="onOpenDialog(true, item, 3)"
-                    >通过</text
-                  >
-                  <text class="text-link" @click="onOpenDialog(false, item, 3)"
-                    >驳回</text
-                  >
-                </Space>
-              </view>
               <span
-                v-else
                 :style="{
                   color: costTextColor(item.operationDeptStatus),
                 }"
@@ -155,7 +133,7 @@
             </uni-td>
             <!-- 审批意见 -->
             <uni-td align="center" v-if="['auditOpinion'].includes(c.key)">
-              <text class="text-link"
+              <text class="text-link" @click="onDetail(item)"
                 ><navigator url="/pages/audit-list/index">查看</navigator></text
               >
             </uni-td>
@@ -234,29 +212,32 @@ const onOpenDialog = (type: boolean, row: { id: string }, person: number) => {
 const store = useAppStore();
 const onBeforeClose = (action: string) =>
   new Promise(async (resolve) => {
-    const key = {
-      1: "projectLeaderStatus",
-      2: "costLeaderStatus",
-      3: "operationDeptStatus",
-    };
     if (action === "cancel") {
       resolve(true);
     } else {
-      await auditApi({
-        ids: [btnRow.value.id],
-        [key[auditOpinionFlag.value]]: isPass.value ? "1" : "2",
-      });
-      await addAuditOpinionApi({
-        projectPhaseCostId: btnRow.value.id,
-        auditOpinion: remark.value,
-        auditOpinionFlag: auditOpinionFlag.value,
-        createByName: store.getUserInfo.nickName,
-      });
+      await auditApi(
+        {
+          ids: [btnRow.value.id],
+          projectLeaderStatus: isPass.value ? "1" : "2",
+        },
+        auditOpinionFlag.value
+      )
+        .then(async () => {
+          await addAuditOpinionApi({
+            projectPhaseCostId: btnRow.value.id,
+            auditOpinion: remark.value,
+            auditOpinionFlag: auditOpinionFlag.value,
+            createByName: store.getUserInfo.nickName,
+          });
+        })
+        .finally(() => {
+          resolve(true);
+        });
+
       emits("reload");
       showToast({
         message: "操作成功",
       });
-      resolve(true);
     }
     remark.value = "";
   });
@@ -374,6 +355,29 @@ const onBatchModel = () => {
         message: "操作成功",
       });
     });
+};
+
+const flag = {
+  1: "项目负责人",
+  2: "成本负责人",
+  3: "运营部",
+};
+
+const onDetail = async (row: any) => {
+  const res = await projectAuditOpinionApi({ projectPhaseCostId: row.id });
+  const {
+    data: { records = [] },
+  } = res;
+
+  const auditList = records.map((x: any) => ({
+    date: x.createTime.split(" ")[0],
+    info: x.auditOpinion,
+    createByName: x.createByName,
+    isPass: 1,
+    auditOpinionFlag: flag[x.auditOpinionFlag],
+  }));
+
+  store.setApprovalOpinion(auditList);
 };
 </script>
 

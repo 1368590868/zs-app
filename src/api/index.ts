@@ -18,6 +18,9 @@ enum Api {
   project_audit_opinion = `${prefix}/project_audit_opinion/page`,
   audit = `${prefix}/project_phase_cost/audit`,
   addAuditOpinion = `${prefix}/project_audit_opinion/add`,
+  costLeaderAudit = `${prefix}/project_month_audit/costLeaderAudit`,
+  operationDeptAudit = `${prefix}/project_month_audit/operationDeptAudit`,
+  remove = `${prefix}/project_phase_cost/remove/`,
 }
 /**
  * @description: 获取用户信息
@@ -75,15 +78,41 @@ export const projectAuditOpinionApi = (params: AuditParams) => {
 };
 
 /**
- * 审批通过驳回
+ * 项目负责人审批通过驳回
  */
-export const auditApi = (params: any) => {
-  return httpClient.post(Api.audit, params);
+export const auditApi = (params: any, type: number) => {
+  switch (type) {
+    case 1:
+      return httpClient.post(Api.audit, params);
+    case 2:
+      return httpClient.post(Api.costLeaderAudit, params);
+    case 3:
+      return httpClient.post(Api.operationDeptAudit, params);
+    default:
+      return httpClient.post(Api.audit, params);
+  }
 };
 
 /**
- * 新增意见
+ *
+ * 成本负责人审核通过驳回
+ */
+export const costLeaderAuditApi = (params: any) => {
+  return;
+};
+/**运营部负审核 */
+export const operationDeptAuditApi = (params: any) => {
+  return httpClient.post(Api.operationDeptAudit, params);
+};
+
+/**
+ * 成本意见
  */
 export const addAuditOpinionApi = (params: any) => {
   return httpClient.post(Api.addAuditOpinion, params);
+};
+
+/**删除成本记录 */
+export const removeApi = (id: string) => {
+  return httpClient.get(`${Api.remove}/${id}`);
 };

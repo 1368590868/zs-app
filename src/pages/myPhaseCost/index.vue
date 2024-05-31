@@ -11,7 +11,7 @@
     <Icon class="filter" name="filter-o" @click="showFilter" />
     <Icon name="replay" class="reflush" @click="onFlush" />
   </view>
-  <ThTable :datasource="datasource" v-if="datasource" />
+  <ThTable :datasource="datasource" v-if="datasource.length > 0" />
   <view class="bg-empty" v-else>
     <Image width="100" height="100" :src="emptyIcon" />
     <text>暂无更多数据</text>
@@ -102,6 +102,7 @@ import { ref, unref, watch, watchEffect } from "vue";
 import ThTable from "./table-list.vue";
 import { costListApi } from "api/index";
 import { emptyIcon } from "constants/imageIcons";
+import { useLoading } from "hooks/useLoading";
 
 const datasource = ref([]);
 
@@ -119,6 +120,8 @@ const model = ref({
 const columns = ref<{ text: string; value: string }[]>([]);
 const dateType = ref("startDate");
 const pickerType = ref("");
+
+const { loading } = useLoading();
 
 watch(
   () => pickerType.value,
@@ -143,7 +146,8 @@ const query = ref({
 });
 
 const getCostList = async (params: any) => {
-  const res = await costListApi(params);
+  loading(true);
+  const res = await costListApi(params).finally(() => loading(false));
   datasource.value = res.data.records;
 };
 

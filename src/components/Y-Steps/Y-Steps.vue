@@ -31,9 +31,9 @@
             <view class="p_header">
               <view>
                 <text class="p_name">{{ i.createByName }}</text>
-                <text class="p_fzr">项目负责人</text>
+                <text class="p_fzr">{{ i.auditOpinionFlag }}</text>
               </view>
-              <view class="p_time"> 2024-23</view>
+              <view class="p_time"> {{ i.date }}</view>
             </view>
             <view
               class="p_audit"
@@ -42,7 +42,11 @@
               <view class="p_yj">意见:</view>
               <view class="p_detail">{{ i.info }}</view>
             </view>
-            <view class="p_pass" :style="{ color: i.bgColor }">通过</view>
+            <view
+              class="p_pass"
+              :style="{ color: i.isPass ? '#27CB0D' : '#EFAD03' }"
+              >通过</view
+            >
           </view>
         </view>
       </view>

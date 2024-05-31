@@ -13,7 +13,9 @@
       <template #action="Props">
         <Space>
           <span :style="{ color: '#0960BD' }">修改</span>
-          <span :style="{ color: '#FF7455' }">删除</span>
+          <span :style="{ color: '#FF7455' }" @click="onDel(Props.item)"
+            >删除</span
+          >
         </Space>
       </template>
       <!-- 项目负责人 -->
@@ -77,10 +79,11 @@
 </template>
 
 <script setup lang="ts">
-import { Space, showDialog } from "vant";
+import { Space, showConfirmDialog, showDialog } from "vant";
 import { myCostStatusEnum } from "enum/index";
 import { computed, h, ref } from "vue";
-import { projectAuditOpinionApi } from "api/index";
+import { projectAuditOpinionApi, removeApi } from "api/index";
+import { useLoading } from "hooks/useLoading";
 
 const props = defineProps({
   datasource: {
@@ -88,10 +91,8 @@ const props = defineProps({
     default: () => [],
   },
 });
-// 自定义插槽单元格点击事件
-const log = (item: any) => {
-  console.log(item);
-};
+const { loading } = useLoading();
+const rows = ref({});
 // 表头配置参数
 const column = ref([
   {
@@ -169,6 +170,23 @@ const costTextColor = (status: number) => {
 // 行点击事件 可不传 默认参数: 整行数据
 const tdClick = (item: any) => {
   console.log(item);
+};
+const beforeClose = (action: "cancel" | "confirm") =>
+  new Promise(async (resolve) => {
+    if (action === "cancel") return resolve(true);
+    if (action === "confirm") {
+      await removeApi(rows.value["id"]).catch(() => resolve(false));
+      resolve(true);
+    }
+  });
+
+const onDel = (row: Object) => {
+  rows.value = row;
+  showConfirmDialog({
+    message: "确定删除本条成本？",
+    // @ts-ignore
+    beforeClose,
+  });
 };
 const onAudit = async (row: { id: string }) => {
   const { id } = row;

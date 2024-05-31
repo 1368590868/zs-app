@@ -4,6 +4,12 @@
 		{
 			"path": "pages/index/index",
 			"style": {
+				"navigationBarTitleText": "项目直接支出成本统计"
+			}
+		},
+		{
+			"path": "pages/projectIncurredExpense/index",
+			"style": {
 				"navigationBarTitleText": "新增发生费用"
 			}
 		},

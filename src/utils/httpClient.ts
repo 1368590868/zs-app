@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useAppStore } from "store/store";
-import { Toast } from "vant";
+import { showToast } from "vant";
 
 export const httpClient = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_URL,
@@ -23,13 +23,15 @@ httpClient.interceptors.request.use(
 
 httpClient.interceptors.response.use(
   (response) => {
-    if (response.data.data && response.data.data.errorCode) {
-      Toast(response.data.data.errorMsg || "出错了");
-      return Promise.reject(response.data.data.errorMsg);
+    console.log(response);
+    if (response.data && response.data.code !== 0) {
+      showToast(response.data.msg || "出错了");
+      return Promise.reject(response.data.msg);
     }
     return response.data;
   },
   (error) => {
+    showToast(error?.message);
     return Promise.reject(error);
   }
 );
