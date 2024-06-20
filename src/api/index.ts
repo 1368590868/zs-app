@@ -9,18 +9,18 @@ export function getRandomSentence() {
 const prefix = "/api/bim-cost-control-backend";
 const userPrefix = "/api/cmct-auth";
 enum Api {
-  add = `${prefix}/project_phase_cost/add`,
-  getProjectNameAndId = `${prefix}/project/getProjectNameAndId`,
-  deptList = `${prefix}/project/deptList`,
+  add = `${prefix}/xmjdcbmx/add`,
+  getProjectNameAndId = `${prefix}/xmjcxx/getProjectNameAndId`,
+  deptList = `${prefix}/xmjcxx/deptList`,
   userInfo = `${userPrefix}/user/userInfo`,
-  findNowPhasesByProjectId = `${prefix}/project_phase/findNowPhasesByProjectId`,
-  costList = `${prefix}/project_phase_cost/page`,
-  project_audit_opinion = `${prefix}/project_audit_opinion/page`,
-  audit = `${prefix}/project_phase_cost/audit`,
-  addAuditOpinion = `${prefix}/project_audit_opinion/add`,
-  costLeaderAudit = `${prefix}/project_month_audit/costLeaderAudit`,
-  operationDeptAudit = `${prefix}/project_month_audit/operationDeptAudit`,
-  remove = `${prefix}/project_phase_cost/remove/`,
+  findNowPhasesByProjectId = `${prefix}/xmlcb/findNowPhasesByProjectId`,
+  costList = `${prefix}/xmjdcbmx/page`,
+  xmshyj = `${prefix}/xmshyj/page`,
+  audit = `${prefix}/xmjdcbmx/audit`,
+  addAuditOpinion = `${prefix}/xmshyj/add`,
+  costLeaderAudit = `${prefix}/xmydsh/costLeaderAudit`,
+  operationDeptAudit = `${prefix}/xmydsh/operationDeptAudit`,
+  remove = `${prefix}/xmjdcbmx/remove/`,
 }
 /**
  * @description: 获取用户信息
@@ -74,7 +74,7 @@ interface AuditParams {
  */
 
 export const projectAuditOpinionApi = (params: AuditParams) => {
-  return httpClient.get(Api.project_audit_opinion, { params });
+  return httpClient.get(Api.xmshyj, { params });
 };
 
 /**
